@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="Description" content="Put your description here." />
+  <base href="/" />
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background-color: #ededed;
+      --r-main-font-size: 24px;
+      --r-heading-margin: 20px 0 12px 0;
+    }
+
+    .slides {
+      width: 75% !important;
+    }
+
+    .container {
+      top: 0 !important;
+      display: flex !important;
+      flex-direction: row !important;
+    }
+
+    .column {
+      flex: 1;
+    }
+
+    section {
+      text-align: left;
+    }
+
+    .popover {
+      position: absolute;
+      background-color: #4d4d4d;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+      border-radius: 10px;
+      width: auto;
+      transform: translate(35px, -15px);
+    }
+
+    .popover:after {
+      content: "";
+      position: absolute;
+      top: 6px;
+      left: -10px;
+      border-style: solid;
+      border-width: 25px 25px 0;
+      border-color: #4d4d4d transparent;
+      display: block;
+      width: 0;
+      z-index: 1;
+      transform: translate(-50%, 50%) rotate(90deg);
+    }
+
+    .reveal pre code {
+      max-height: 800px !important;
+    }
+  </style>
+  <link rel="stylesheet" href="/node_modules/reveal.js/dist/reveal.css" />
+  <link rel="stylesheet" href="/node_modules/reveal.js/dist/theme/black.css" />
+  <link rel="stylesheet" href="/node_modules/reveal.js/plugin/highlight/monokai.css" />
+  <title>Lesson 4</title>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <h1>Generic Types</h1>
+      </section>
+
+      <section>
+        <h3>Generic Types</h3>
+        <li class="fragment fade-in-then-semi-out">
+          <em>Generics</em>: A type defined in relation to one or more other types
+        </li>
+        <li class="fragment fade-in-then-semi-out">
+          Tool for effectively handling the duplication of concepts, similar to functions
+        </li>
+        <li class="fragment fade-in-then-semi-out">
+          Use <code>&lt></code> syntax at instantiation type for specifying the related types
+        </li>
+        <li class="fragment fade-in-then-semi-out">
+          Used in:
+        </li>
+        <ul>
+          <li class="fragment fade-in-then-semi-out">
+            Options
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            Generic functions
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            Collections
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            Error handling
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>Option</h3>
+        <!-- snag, feels like it needs an example -->
+        <li class="fragment fade-in-then-semi-out">
+          Serves the same purpose as <code>null</code> from most other languages
+        </li>
+        <li class="fragment fade-in-then-semi-out">
+          Is an Enum with two variants, <code>None</code> and <code>Some&ltT></code>
+        </li>
+        <li class="fragment fade-in-then-semi-out">
+          When instantiating, you can leave off <code>Option::</code>, because it's so common it was built into the
+          language
+        </li>
+      </section>
+      <!-- potential option example -->
+      <!-- 
+      <section>
+        <pre><code class="rust" data-noescape>
+          fn main() {
+            fn plus_one(x: Option<i32>) -> Option<i32> {
+                match x {
+                    None => None,
+                    Some(i) => Some(i + 1),
+                }
+            }
+        
+            let five = Some(5);
+            let six = plus_one(five);
+            let none = plus_one(None);
+        }        
+        </code></pre>
+      </section> -->
+      <section>
+        <h3>Generic functions</h3>
+        <li class="fragment fade-in-then-semi-out">
+          With <code>Some&ltT></code> after the function name in the definition
+        </li>
+        <li class="fragment fade-in-then-semi-out">
+          When calling the function, you can specify the return value type either:
+        </li>
+        <ul>
+          <li class="fragment fade-in-then-semi-out">
+            After the variable name its return value being assigned to
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            Between the function name and the parameter list with <code>::&ltT></code>
+          </li>
+        </ul>
+      </section>
+      <!-- potential generic function example -->
+      <!-- <section>
+        <pre><code class="rust" data-noescape>
+          fn largest&ltT: PartialOrd>(first: T, second: T) -> T {
+            // potential callout: we need to specify PartialOrd in the trait bounds for T so
+            // the `largest` function can work on slices of any type that we can compare
+            if first > second {
+                first
+            } else {
+                second
+            }
+          }
+
+          fn main() {
+              let result_char = largest::<char>('a', 'b');
+              let result_int: i32 = largest(3, 2);
+              println!("The largest char is {}", result_char);
+              println!("The largest int is {}", result_int);
+          }
+        </code></pre>
+      </section> -->
+      <section>
+        <h3>Collections</h3>
+        <li class="fragment fade-in-then-semi-out">
+          Vectors
+        </li>
+        <ul>
+          <li class="fragment fade-in-then-semi-out">
+            Like arrays
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            <code>vec![]</code> (declarative macro)
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            Vectors can be grown (dynamic memory allocation)
+          </li>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              Less efficient than arrays
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              Allows for out of bounds indexing
+            </li>
+          </ul>
+          <li class="fragment fade-in-then-semi-out">
+            <code>.get</code>
+          </li>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              Returns an option
+            </li>
+          </ul>
+          <li class="fragment fade-in-then-semi-out">
+            Can be converted to an iterator (coming up next)
+          </li>
+        </ul>
+        <li class="fragment fade-in-then-semi-out">
+          Collection iterators
+        </li>
+        <ul>
+          <li class="fragment fade-in-then-semi-out">
+            Since Iterators never mutate the source object, you must save the return value
+          </li>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              <code>.collect</code> turns the iterator back into a vector
+            </li>
+          </ul>
+        </ul>
+        <li class="fragment fade-in-then-semi-out">
+          Hashmaps
+        </li>
+        <ul>
+          <li class="fragment fade-in-then-semi-out">
+            Methods are <code>.insert()</code>, <code>.get()</code>, and <code>.remove()</code>
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            <code>.iter()</code> provides an iterator over the key-value pairs
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            in addition to <code>iter()</code>, there are <code>.keys()</code> and <code>.values()</code>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>Error Handling</h3>
+        <li class="fragment fade-in-then-semi-out">
+          Panic
+        </li>
+        <ul>
+          <li class="fragment fade-in-then-semi-out">
+            Crashes the application immediately
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            Out-of-bounds error is one thing that leads to this
+          </li>
+        </ul>
+        <li class="fragment fade-in-then-semi-out">
+          The <code>Result</code> enum
+        </li>
+        <ul>
+          <li class="fragment fade-in-then-semi-out">
+            A generic result over two types
+          </li>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              The <code>Ok</code> type for when all goes right
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              The the <code>Err</code> type for when there is an error
+            </li>
+          </ul>
+          <li class="fragment fade-in-then-semi-out">
+            It's common when writing error handling for an outer function to:
+          </li>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              <code>match</code> against the variant of the <code>Result</code> instance (<code>Error</code> or
+              <code>Ok</code>)
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              Pass along any errors as its return value if the subroutine failed
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              Define the primary code to be run conditionally in the <code>Ok</code> arm.
+            </li>
+            <ul>
+              <li class="fragment fade-in-then-semi-out">
+                This can all be done with a <code>?</code> after the function invocation
+              </li>
+              <ul>
+                <li class="fragment fade-in-then-semi-out">
+                  Injects the error matching and passalong code
+                </li>
+              </ul>
+            </ul>
+          </ul>
+        </ul>
+        <li class="fragment fade-in-then-semi-out">
+          <code>unwrap</code>
+        </li>
+        <ul>
+          <li class="fragment fade-in-then-semi-out">
+            Used on a <code>Result</code> or <code>Option</code>
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            Panics on <code>Err</code> or <code>None</code>
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            Very bad practice
+          </li>
+        </ul>
+      </section>
+      <!-- potential error handling example -->
+      <!-- <section>
+        <pre><code class="rust" data-noescape>
+          fn main() {
+              panic!("crash and burn");
+          }
+        </code></pre>
+        <pre><code class="rust" data-noescape>
+          enum Result&ltT, E> {
+              Ok(T),
+              Err(E),
+          }
+        </code></pre>
+        <pre><code class="rust" data-noescape>
+          fn main() {
+              let f = File::open("hello.txt");
+
+              let f = match f {
+                  Ok(file) => file,
+                  Err(error) => panic!("Problem opening the file: {:?}", error),
+              };
+          }
+        </code></pre>
+        <pre><code class="rust" data-noescape>
+          fn read_username_from_file() -> Result<String, io::Error> {
+              let mut f = File::open("hello.txt")?;
+              let mut s = String::new();
+              f.read_to_string(&mut s)?;
+              Ok(s)
+          }
+        </code></pre>
+        <pre><code class="rust" data-noescape>
+          fn main() {
+              let f = File::open("hello.txt").unwrap();
+          }
+        </code></pre>
+      </section> -->
+    </div>
+  </div>
+
+  <script type="module">
+    import Reveal from "reveal.js";
+    import Markdown from "reveal.js/plugin/markdown/markdown.esm.js";
+    import RevealHighlight from "reveal.js/plugin/highlight/highlight.esm.js";
+    import RevealNotes from "reveal.js/plugin/notes/notes.esm.js";
+    import RevealNestedFragments from "reveal.js-nested-fragments";
+
+    let deck = new Reveal({
+      transition: "none",
+      plugins: [
+        Markdown,
+        RevealHighlight,
+        RevealNotes,
+        RevealNestedFragments,
+      ],
+    });
+    deck.initialize();
+  </script>
+</body>
+
+</html>
