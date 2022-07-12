@@ -113,6 +113,17 @@
         <section>
           <h3>Option</h3>
 
+          <li class="fragment fade-in-then-semi-out">
+            Serves the same purpose as <code>null</code> from most other languages
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            Is an Enum with two variants, <code>None</code> and <code>Some&ltT></code>
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            When instantiating, you can leave off <code>Option::</code>, because it's so common it was built into the
+            language
+          </li>
+  
           <pre><code class="rust" data-noescape>
 <span class="fragment">
 // Option is an Enum with two variants, None and Some&lt;T&gt;
@@ -155,14 +166,16 @@ fn main() {
         <h3>Generic functions</h3>
 
         <pre><code class="rust" data-noescape>
-fn wrap_into_option&lt;T&gt;(value: T) -> Option&lt;T&gt; { //  With Some&lt;T&gt; after the function name in the definition
+// To define a function accepting a generic type, include &lt;T&gt; after the function name
+fn wrap_into_option&lt;T&gt;(value: T) -> Option&lt;T&gt; {
   Option(value)
 }
 
 fn main() {
-  // When calling the function, you can specify the return value type either:
+  // When calling the function that operates on a generic type, you can specify the return value type either:
   let maybe_number: Option&lt;u32&gt; = wrap_into_option(4); // After the variable name to which the function's return value is assigned
   let maybe_number = wrap_into_option::&lt;u32&gt;(4); // Between the function name and the parameter list with ::&lt;T&gt;
+}
         </code></pre>
         </section>
 
@@ -170,17 +183,49 @@ fn main() {
           <h3>Collections</h3>
 
           <h4>Vectors</h4>
-
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              Like arrays
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              <code>vec![]</code> (declarative macro)
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              Vectors can be grown (dynamic memory allocation)
+            </li>
+            <ul>
+              <li class="fragment fade-in-then-semi-out">
+                Less efficient than arrays
+              </li>
+              <li class="fragment fade-in-then-semi-out">
+                Allows for out of bounds indexing
+              </li>
+            </ul>
+            <li class="fragment fade-in-then-semi-out">
+              <code>.get</code>
+            </li>
+            <ul>
+              <li class="fragment fade-in-then-semi-out">
+                Returns an option
+              </li>
+            </ul>
+            <li class="fragment fade-in-then-semi-out">
+              Can be converted to an iterator (coming up next)
+            </li>
+          </ul>
+          
           <pre><code class="rust">
 fn main() {
-  let empty: Vec&lt;u32&gt; = Vec::new(); // New empty vector
-  let mut numbers: Vec&lt;u32&gt; = vec![1, 2, 3]; // New vector with 3 elements
+  // Like arrays, vectors hold lists of things
+  let empty: Vec&lt;u32&gt; = Vec::new();
+  let mut numbers: Vec&lt;u32&gt; = vec![1, 2, 3];
 
   numbers.push(5); // Vectors can be grown (dynamic memory allocation)
+                   // This means they are less efficient than arrays
 
-  let first = numbers[0]; // Allows for out of bounds indexing
+  let first = numbers[0]; // Can lead to out of bounds indexing
 
-  let maybe_sixth: Option&lt;u32&gt; = numbers.get(5); // Returns an option, safer
+  let maybe_sixth: Option&lt;u32&gt; = numbers.get(5); // Safer; Returns an option
 
   let summed_numbers: Vec&lt;u32&gt; = numbers.into_iter().map(|x| x + 1).collect(); // Can be converted into iterators
 }
@@ -191,7 +236,20 @@ fn main() {
           <h3>Collections</h3>
 
           <h4>Hashmaps</h4>
-
+          <li class="fragment fade-in-then-semi-out">
+            Hashmaps
+          </li>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              Methods are <code>.insert()</code>, <code>.get()</code>, and <code>.remove()</code>
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              <code>.iter()</code> provides an iterator over the key-value pairs
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              in addition to <code>iter()</code>, there are <code>.keys()</code> and <code>.values()</code>
+            </li>
+          </ul>
           <pre><code class="rust">
 use std::collections::Hashmap;
 
@@ -229,7 +287,58 @@ fn main() {
           <li class="fragment fade-in-then-semi-out">
             The <code>Result</code> enum
           </li>
-
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              A generic result over two types
+            </li>
+            <ul>
+              <li class="fragment fade-in-then-semi-out">
+                The <code>Ok</code> type for when all goes right
+              </li>
+              <li class="fragment fade-in-then-semi-out">
+                The the <code>Err</code> type for when there is an error
+              </li>
+            </ul>
+            <li class="fragment fade-in-then-semi-out">
+              It's common when writing error handling for an outer function to:
+            </li>
+            <ul>
+              <li class="fragment fade-in-then-semi-out">
+                <code>match</code> against the variant of the <code>Result</code> instance (<code>Error</code> or
+                <code>Ok</code>)
+              </li>
+              <li class="fragment fade-in-then-semi-out">
+                Pass along any errors as its return value if the subroutine failed
+              </li>
+              <li class="fragment fade-in-then-semi-out">
+                Define the primary code to be run conditionally in the <code>Ok</code> arm.
+              </li>
+              <ul>
+                <li class="fragment fade-in-then-semi-out">
+                  This can all be done with a <code>?</code> after the function invocation
+                </li>
+                <ul>
+                  <li class="fragment fade-in-then-semi-out">
+                    Injects the error matching and passalong code
+                  </li>
+                </ul>
+              </ul>
+            </ul>
+          </ul>
+          <li class="fragment fade-in-then-semi-out">
+            <code>unwrap</code>
+          </li>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              Used on a <code>Result</code> or <code>Option</code>
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              Panics on <code>Err</code> or <code>None</code>
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              Very bad practice
+            </li>
+          </ul>
           <pre><code class="rust" data-noescape>
 enum Result&lt;T, E&gt; { // Generic result over two types
   Ok(T), // The `Ok` type for when all goes right
@@ -318,6 +427,7 @@ fn complex_computation() -> Result&lt;u32, String&gt; {
       import RevealNotes from "reveal.js/plugin/notes/notes.esm.js";
       import RevealNestedFragments from "reveal.js-nested-fragments";
       import RevealEliminateEmtpyLines from "reveal.js-eliminate-empty-lines";
+      //import RevealAnimateFragments from "reveal.js-animate-fragments";
 
       let deck = new Reveal({
         transition: "none",
@@ -327,6 +437,7 @@ fn complex_computation() -> Result&lt;u32, String&gt; {
           RevealNotes,
           RevealNestedFragments,
           RevealEliminateEmtpyLines,
+          //RevealAnimateFragments
         ],
       });
       deck.initialize();
