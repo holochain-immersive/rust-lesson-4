@@ -1,123 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="Description" content="Put your description here." />
+    <base href="/" />
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="Description" content="Put your description here." />
-  <base href="/" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background-color: #ededed;
+        --r-main-font-size: 24px;
+        --r-heading-margin: 20px 0 12px 0;
+      }
 
-  <style>
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-      background-color: #ededed;
-      --r-main-font-size: 24px;
-      --r-heading-margin: 20px 0 12px 0;
-    }
+      .slides {
+        width: 75% !important;
+      }
 
-    .slides {
-      width: 75% !important;
-    }
+      .container {
+        top: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+      }
 
-    .container {
-      top: 0 !important;
-      display: flex !important;
-      flex-direction: row !important;
-    }
+      .column {
+        flex: 1;
+      }
 
-    .column {
-      flex: 1;
-    }
+      section {
+        text-align: left;
+      }
 
-    section {
-      text-align: left;
-    }
+      .popover {
+        position: absolute;
+        background-color: #4d4d4d;
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        border-radius: 10px;
+        width: auto;
+        transform: translate(35px, -15px);
+      }
 
-    .popover {
-      position: absolute;
-      background-color: #4d4d4d;
-      padding: 1rem 2rem;
-      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-      border-radius: 10px;
-      width: auto;
-      transform: translate(35px, -15px);
-    }
+      .popover:after {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: -10px;
+        border-style: solid;
+        border-width: 25px 25px 0;
+        border-color: #4d4d4d transparent;
+        display: block;
+        width: 0;
+        z-index: 1;
+        transform: translate(-50%, 50%) rotate(90deg);
+      }
 
-    .popover:after {
-      content: "";
-      position: absolute;
-      top: 6px;
-      left: -10px;
-      border-style: solid;
-      border-width: 25px 25px 0;
-      border-color: #4d4d4d transparent;
-      display: block;
-      width: 0;
-      z-index: 1;
-      transform: translate(-50%, 50%) rotate(90deg);
-    }
+      .reveal pre code {
+        max-height: 800px !important;
+      }
+    </style>
+    <link rel="stylesheet" href="/node_modules/reveal.js/dist/reveal.css" />
+    <link
+      rel="stylesheet"
+      href="/node_modules/reveal.js/dist/theme/black.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/node_modules/reveal.js/plugin/highlight/monokai.css"
+    />
+    <title>Lesson 4</title>
+  </head>
 
-    .reveal pre code {
-      max-height: 800px !important;
-    }
-  </style>
-  <link rel="stylesheet" href="/node_modules/reveal.js/dist/reveal.css" />
-  <link rel="stylesheet" href="/node_modules/reveal.js/dist/theme/black.css" />
-  <link rel="stylesheet" href="/node_modules/reveal.js/plugin/highlight/monokai.css" />
-  <title>Lesson 4</title>
-</head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>Generic Types</h1>
+        </section>
 
-<body>
-  <div class="reveal">
-    <div class="slides">
-      <section>
-        <h1>Generic Types</h1>
-      </section>
+        <section>
+          <h3>Generic Types</h3>
 
-      <section>
-        <h3>Generic Types</h3>
-
-        <li class="fragment fade-in-then-semi-out">
-          <em>Definition</em>: A generic is a type defined in relation to one or more other types
-        </li>
-        <li class="fragment fade-in-then-semi-out">
-          I pattern of code reuse, like functions or classes, but at a higher level of abstraction
-        </li>
-        <li class="fragment fade-in-then-semi-out">
-          Use <code>&lt></code> syntax at instantiation type for specifying the related types
-        </li>
-        <li class="fragment fade-in-then-semi-out">
-          Used in:
-        </li>
-        <ul>
           <li class="fragment fade-in-then-semi-out">
-            Stucts and enums
+            <em>Definition</em>: A generic is a type defined in relation to one
+            or more other types
           </li>
           <li class="fragment fade-in-then-semi-out">
-            Options
+            I pattern of code reuse, like functions or classes, but at a higher
+            level of abstraction
           </li>
           <li class="fragment fade-in-then-semi-out">
-            Generic functions
+            Use <code>&lt></code> syntax at instantiation type for specifying
+            the related types
           </li>
-          <li class="fragment fade-in-then-semi-out">
-            Collections
-          </li>
-          <li class="fragment fade-in-then-semi-out">
-            Error handling
-          </li><span class="fragment"></span>
-        </ul>
-      </section>
-      <section>
-        <h3>Option</h3>
+          <li class="fragment fade-in-then-semi-out">Used in:</li>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">Stucts and enums</li>
+            <li class="fragment fade-in-then-semi-out">Options</li>
+            <li class="fragment fade-in-then-semi-out">Generic functions</li>
+            <li class="fragment fade-in-then-semi-out">Collections</li>
+            <li class="fragment fade-in-then-semi-out">Error handling</li>
+            <span class="fragment"></span>
+          </ul>
+        </section>
+        <section>
+          <h3>Option</h3>
 
-        <li class="fragment fade-in-then-semi-out">
-          Serves the same purpose as <code>null</code> from most other languages
-        </li>
+          <li class="fragment fade-in-then-semi-out">
+            Serves the same purpose as <code>null</code> from most other
+            languages
+          </li>
 
-        <pre><code class="rust" data-noescape>
+          <pre><code class="rust" data-noescape>
 enum Option&lt;T&gt; { // Is an Enum with two variants, <code>None</code> and <code>Some&ltT></code>
   Some(T),
   None // Serves the same purpose as <code>null</code> from most other languages
@@ -136,13 +137,12 @@ fn main() {
   let none = plus_one(None);
 }
         </code></pre>
+        </section>
 
-      </section>
+        <section>
+          <h3>Generic functions</h3>
 
-      <section>
-        <h3>Generic functions</h3>
-
-        <pre><code class="rust" data-noescape>
+          <pre><code class="rust" data-noescape>
 fn wrap_into_option&lt;T&gt;(value: T) -> Option&lt;T&gt; { //  With <code>Some&ltT></code> after the function name in the definition
   Option(value)
 }
@@ -152,15 +152,14 @@ fn main() {
   let maybe_number: Option&lt;u32&gt; = wrap_into_option(4); // After the variable name to which the function's return value is assigned
   let maybe_number = wrap_into_option::&lt;u32&gt;(4); // Between the function name and the parameter list with <code>::&ltT></code>
         </code></pre>
+        </section>
 
-      </section>
+        <section>
+          <h3>Collections</h3>
 
-      <section>
-        <h3>Collections</h3>
+          <h4>Vectors</h4>
 
-        <h4>Vectors</h4>
-
-        <pre><code class="rust">
+          <pre><code class="rust">
 fn main() {
   let empty: Vec&lt;u32&gt; = Vec::new(); // New empty vector
   let mut numbers: Vec&lt;u32&gt; = vec![1, 2, 3]; // New vector with 3 elements
@@ -174,15 +173,14 @@ fn main() {
   let summed_numbers: Vec&lt;u32&gt; = numbers.into_iter().map(|x| x + 1).collect(); // Can be converted into iterators
 }
         </code></pre>
+        </section>
 
-      </section>
+        <section>
+          <h3>Collections</h3>
 
-      <section>
-        <h3>Collections</h3>
+          <h4>Hashmaps</h4>
 
-        <h4>Hashmaps</h4>
-
-<pre><code class="rust">
+          <pre><code class="rust">
 use std::collections::Hashmap;
 
 fn main() {
@@ -202,40 +200,36 @@ fn main() {
   for age in ages.values() { /* Iterate over values */ }
 }
 </code></pre>
+        </section>
+        <section>
+          <h3>Error Handling</h3>
 
-      </section>
-      <section>
-        <h3>Error Handling</h3>
+          <li class="fragment fade-in-then-semi-out">Panic</li>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              Crashes the application immediately
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              Out-of-bounds error is one thing that leads to this
+            </li>
+          </ul>
 
-        <li class="fragment fade-in-then-semi-out">
-          Panic
-        </li>
-        <ul>
           <li class="fragment fade-in-then-semi-out">
-            Crashes the application immediately
+            The <code>Result</code> enum
           </li>
-          <li class="fragment fade-in-then-semi-out">
-            Out-of-bounds error is one thing that leads to this
-          </li>
-        </ul>
 
-        <li class="fragment fade-in-then-semi-out">
-          The <code>Result</code> enum
-        </li>
-
-        <pre><code class="rust" data-noescape>
+          <pre><code class="rust" data-noescape>
 enum Result&lt;T, E&gt; { // Generic result over two types
   Ok(T), // The <code>Ok</code> type for when all goes right
   Err(E) // The <code>Err</code> type for when there is an error
 }
         </code></pre>
+        </section>
 
-      </section>
+        <section>
+          <h3>Error Handling</h3>
 
-      <section>
-        <h3>Error Handling</h3>
-
-        <pre><code class="rust" data-noescape>
+          <pre><code class="rust" data-noescape>
 fn simple_computation() -> Result&lt;u32, String&gt; {
   // ...
 }
@@ -259,12 +253,11 @@ fn complex_computation() -> Result&lt;u32, String&gt; {
   let result = simple_computation().unwrap(); // If result is Err, panic: very bad practice
   let result = Option::Some(4).unwrap(); // If result is None, panic
 }
-</code></pre>          
+</code></pre>
+        </section>
 
-      </section>
-
-      <!-- potential error handling example -->
-      <!-- <section>
+        <!-- potential error handling example -->
+        <!-- <section>
         <pre><code class="rust" data-noescape>
           fn main() {
               panic!("crash and burn");
@@ -300,30 +293,31 @@ fn complex_computation() -> Result&lt;u32, String&gt; {
           }
         </code></pre>
       </section> -->
-      <section>
-        <h1>That's it!</h1>
-      </section>
+        <section>
+          <h1>That's it!</h1>
+        </section>
+      </div>
     </div>
-  </div>
 
-  <script type="module">
-    import Reveal from "reveal.js";
-    import Markdown from "reveal.js/plugin/markdown/markdown.esm.js";
-    import RevealHighlight from "reveal.js/plugin/highlight/highlight.esm.js";
-    import RevealNotes from "reveal.js/plugin/notes/notes.esm.js";
-    import RevealNestedFragments from "reveal.js-nested-fragments";
+    <script type="module">
+      import Reveal from "reveal.js";
+      import Markdown from "reveal.js/plugin/markdown/markdown.esm.js";
+      import RevealHighlight from "reveal.js/plugin/highlight/highlight.esm.js";
+      import RevealNotes from "reveal.js/plugin/notes/notes.esm.js";
+      import RevealNestedFragments from "reveal.js-nested-fragments";
+      import RevealEliminateEmtpyLines from "reveal.js-eliminate-empty-lines";
 
-    let deck = new Reveal({
-      transition: "none",
-      plugins: [
-        Markdown,
-        RevealHighlight,
-        RevealNotes,
-        RevealNestedFragments,
-      ],
-    });
-    deck.initialize();
-  </script>
-</body>
-
+      let deck = new Reveal({
+        transition: "none",
+        plugins: [
+          Markdown,
+          RevealHighlight,
+          RevealNotes,
+          RevealNestedFragments,
+          RevealEliminateEmtpyLines,
+        ],
+      });
+      deck.initialize();
+    </script>
+  </body>
 </html>
