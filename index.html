@@ -118,7 +118,7 @@
         </li>
 
         <pre><code class="rust" data-noescape>
-enum Option&lt;T&gt; {
+enum Option&lt;T&gt; { // Is an Enum with two variants, <code>None</code> and <code>Some&ltT></code>
   Some(T),
   None // Serves the same purpose as <code>null</code> from most other languages
 }
@@ -126,7 +126,7 @@ enum Option&lt;T&gt; {
 fn main() {
   fn plus_one(x: Option&lt;i32&gt;) -> Option&lt;i32&gt; {
       match x {
-          None => None,// You can leave off "Option::", it's built into the language
+          None => None, // You can leave off "Option::", it's built into the language
           Some(i) => Some(i + 1),
       }
   }
@@ -143,14 +143,14 @@ fn main() {
         <h3>Generic functions</h3>
 
         <pre><code class="rust" data-noescape>
-fn wrap_into_option&lt;T&gt;(value: T) -> Option&lt;T&gt; {
+fn wrap_into_option&lt;T&gt;(value: T) -> Option&lt;T&gt; { //  With <code>Some&ltT></code> after the function name in the definition
   Option(value)
 }
 
 fn main() {
-  let maybe_number: Option&lt;u32&gt; = wrap_into_option(4); 
-  let maybe_number = wrap_into_option::&lt;u32&gt;(4); // Identical to the line above
-}
+  // When calling the function, you can specify the return value type either:
+  let maybe_number: Option&lt;u32&gt; = wrap_into_option(4); // After the variable name to which the function's return value is assigned
+  let maybe_number = wrap_into_option::&lt;u32&gt;(4); // Between the function name and the parameter list with <code>::&ltT></code>
         </code></pre>
 
       </section>
@@ -169,7 +169,7 @@ fn main() {
 
   let first = numbers[0]; // Allows for out of bounds indexing
 
-  let maybe_sixth: Option&lt;u32&gt; = numbers.get(5); 
+  let maybe_sixth: Option&lt;u32&gt; = numbers.get(5); // Returns an option, safer
 
   let summed_numbers: Vec&lt;u32&gt; = numbers.into_iter().map(|x| x + 1).collect(); // Can be converted into iterators
 }
@@ -194,6 +194,12 @@ fn main() {
   let alice_age: Option&lt;u32&gt; = ages.get(alice_name); // Getting an option by key
  
   ages.remove(alice_name); // Removes the given key, requires mutability
+
+  for (name, age) in ages.iter() { // Iterate over the (key, value) pairs
+    println!("{} is {} years old", name, age);
+  }
+  for name in ages.keys() { /* Iterate over keys */ }
+  for age in ages.values() { /* Iterate over values */ }
 }
 </code></pre>
 
@@ -218,9 +224,9 @@ fn main() {
         </li>
 
         <pre><code class="rust" data-noescape>
-enum Result&lt;T, E&gt; {
-  Ok(T), // Operation succeeded
-  Err(E) // Operation failed
+enum Result&lt;T, E&gt; { // Generic result over two types
+  Ok(T), // The <code>Ok</code> type for when all goes right
+  Err(E) // The <code>Err</code> type for when there is an error
 }
         </code></pre>
 
@@ -237,13 +243,13 @@ fn simple_computation() -> Result&lt;u32, String&gt; {
 fn complex_computation() -> Result&lt;u32, String&gt; {
   let result = simple_computation();
 
-  match result {
+  match result { // This pattern is really common
     Ok(number) => {
-      // Other computations...
+      // Define primary code
 
       Ok(number)
     },
-    Err(err) => Err(err)
+    Err(err) => Err(err) // match and return if there is an error
   }
 }
 
