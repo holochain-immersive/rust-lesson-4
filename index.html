@@ -79,6 +79,7 @@
 
       <section>
         <h3>Generic Types</h3>
+
         <li class="fragment fade-in-then-semi-out">
           <em>Definition</em>: A generic is a type defined in relation to one or more other types
         </li>
@@ -92,6 +93,9 @@
           Used in:
         </li>
         <ul>
+          <li class="fragment fade-in-then-semi-out">
+            Stucts and enums
+          </li>
           <li class="fragment fade-in-then-semi-out">
             Options
           </li>
@@ -108,139 +112,95 @@
       </section>
       <section>
         <h3>Option</h3>
-        <!-- snag, feels like it needs an example -->
+
         <li class="fragment fade-in-then-semi-out">
           Serves the same purpose as <code>null</code> from most other languages
         </li>
-        <li class="fragment fade-in-then-semi-out">
-          Is an Enum with two variants, <code>None</code> and <code>Some&ltT></code>
-        </li>
-        <li class="fragment fade-in-then-semi-out">
-          When instantiating, you can leave off <code>Option::</code>, because it's so common it was built into the
-          language
-        </li>
-      </section>
-      <!-- potential option example -->
-      <!-- 
-      <section>
+
         <pre><code class="rust" data-noescape>
-          fn main() {
-            fn plus_one(x: Option<i32>) -> Option<i32> {
-                match x {
-                    None => None,
-                    Some(i) => Some(i + 1),
-                }
-            }
-        
-            let five = Some(5);
-            let six = plus_one(five);
-            let none = plus_one(None);
-        }        
+enum Option&lt;T&gt; {
+  Some(T),
+  None // Serves the same purpose as <code>null</code> from most other languages
+}
+
+fn main() {
+  fn plus_one(x: Option&lt;i32&gt;) -> Option&lt;i32&gt; {
+      match x {
+          None => None,// You can leave off "Option::", it's built into the language
+          Some(i) => Some(i + 1),
+      }
+  }
+
+  let five = Some(5);
+  let six = plus_one(five);
+  let none = plus_one(None);
+}
         </code></pre>
-      </section> -->
+
+      </section>
+
       <section>
         <h3>Generic functions</h3>
-        <li class="fragment fade-in-then-semi-out">
-          With <code>Some&ltT></code> after the function name in the definition
-        </li>
-        <li class="fragment fade-in-then-semi-out">
-          When calling the function, you can specify the return value type either:
-        </li>
-        <ul>
-          <li class="fragment fade-in-then-semi-out">
-            After the variable name to which the function's return value is assigned
-          </li>
-          <li class="fragment fade-in-then-semi-out">
-            Between the function name and the parameter list with <code>::&ltT></code>
-          </li>
-        </ul>
-      </section>
-      <!-- potential generic function example -->
-      <!-- <section>
-        <pre><code class="rust" data-noescape>
-          fn largest&ltT: PartialOrd>(first: T, second: T) -> T {
-            // potential callout: we need to specify PartialOrd in the trait bounds for T so
-            // the `largest` function can work on slices of any type that we can compare
-            if first > second {
-                first
-            } else {
-                second
-            }
-          }
 
-          fn main() {
-              let result_char = largest::<char>('a', 'b');
-              let result_int: i32 = largest(3, 2);
-              println!("The largest char is {}", result_char);
-              println!("The largest int is {}", result_int);
-          }
+        <pre><code class="rust" data-noescape>
+fn wrap_into_option&lt;T&gt;(value: T) -> Option&lt;T&gt; {
+  Option(value)
+}
+
+fn main() {
+  let maybe_number: Option&lt;u32&gt; = wrap_into_option(4); 
+  let maybe_number = wrap_into_option::&lt;u32&gt;(4); // Identical to the line above
+}
         </code></pre>
-      </section> -->
+
+      </section>
+
       <section>
         <h3>Collections</h3>
-        <li class="fragment fade-in-then-semi-out">
-          Vectors
-        </li>
-        <ul>
-          <li class="fragment fade-in-then-semi-out">
-            Like arrays
-          </li>
-          <li class="fragment fade-in-then-semi-out">
-            <code>vec![]</code> (declarative macro)
-          </li>
-          <li class="fragment fade-in-then-semi-out">
-            Vectors can be grown (dynamic memory allocation)
-          </li>
-          <ul>
-            <li class="fragment fade-in-then-semi-out">
-              Less efficient than arrays
-            </li>
-            <li class="fragment fade-in-then-semi-out">
-              Allows for out of bounds indexing
-            </li>
-          </ul>
-          <li class="fragment fade-in-then-semi-out">
-            <code>.get</code>
-          </li>
-          <ul>
-            <li class="fragment fade-in-then-semi-out">
-              Returns an option
-            </li>
-          </ul>
-          <li class="fragment fade-in-then-semi-out">
-            Can be converted to an iterator (coming up next)
-          </li>
-        </ul>
-        <li class="fragment fade-in-then-semi-out">
-          Collection iterators
-        </li>
-        <ul>
-          <li class="fragment fade-in-then-semi-out">
-            Since Iterators never mutate the source object, you must save the return value
-          </li>
-          <ul>
-            <li class="fragment fade-in-then-semi-out">
-              <code>.collect</code> turns the iterator back into a vector
-            </li>
-          </ul>
-        </ul>
-        <li class="fragment fade-in-then-semi-out">
-          Hashmaps
-        </li>
-        <ul>
-          <li class="fragment fade-in-then-semi-out">
-            Methods are <code>.insert()</code>, <code>.get()</code>, and <code>.remove()</code>
-          </li>
-          <li class="fragment fade-in-then-semi-out">
-            <code>.iter()</code> provides an iterator over the key-value pairs
-          </li>
-          <li class="fragment fade-in-then-semi-out">
-            in addition to <code>iter()</code>, there are <code>.keys()</code> and <code>.values()</code>
-          </li>
-        </ul>
+
+        <h4>Vectors</h4>
+
+        <pre><code class="rust">
+fn main() {
+  let empty: Vec&lt;u32&gt; = Vec::new(); // New empty vector
+  let mut numbers: Vec&lt;u32&gt; = vec![1, 2, 3]; // New vector with 3 elements
+
+  numbers.push(5); // Vectors can be grown (dynamic memory allocation)
+
+  let first = numbers[0]; // Allows for out of bounds indexing
+
+  let maybe_sixth: Option&lt;u32&gt; = numbers.get(5); 
+
+  let summed_numbers: Vec&lt;u32&gt; = numbers.into_iter().map(|x| x + 1).collect(); // Can be converted into iterators
+}
+        </code></pre>
+
+      </section>
+
+      <section>
+        <h3>Collections</h3>
+
+        <h4>Hashmaps</h4>
+
+<pre><code class="rust">
+use std::collections::Hashmap;
+
+fn main() {
+  let mut ages: HashMap&lt;String, u32&gt; = HashMap::new(); // New empty HashMap
+  
+  let alice_name = String::from("Alice");
+  ages.insert(alice_name, 53); // Inserting with key and value, requires mutability
+
+  let alice_age: Option&lt;u32&gt; = ages.get(alice_name); // Getting an option by key
+ 
+  ages.remove(alice_name); // Removes the given key, requires mutability
+}
+</code></pre>
+
       </section>
       <section>
         <h3>Error Handling</h3>
+
         <li class="fragment fade-in-then-semi-out">
           Panic
         </li>
@@ -252,62 +212,51 @@
             Out-of-bounds error is one thing that leads to this
           </li>
         </ul>
+
         <li class="fragment fade-in-then-semi-out">
           The <code>Result</code> enum
         </li>
-        <ul>
-          <li class="fragment fade-in-then-semi-out">
-            A generic result over two types
-          </li>
-          <ul>
-            <li class="fragment fade-in-then-semi-out">
-              The <code>Ok</code> type for when all goes right
-            </li>
-            <li class="fragment fade-in-then-semi-out">
-              The the <code>Err</code> type for when there is an error
-            </li>
-          </ul>
-          <li class="fragment fade-in-then-semi-out">
-            It's common when writing error handling for an outer function to:
-          </li>
-          <ul>
-            <li class="fragment fade-in-then-semi-out">
-              <code>match</code> against the variant of the <code>Result</code> instance (<code>Error</code> or
-              <code>Ok</code>)
-            </li>
-            <li class="fragment fade-in-then-semi-out">
-              Pass along any errors as its return value if the subroutine failed
-            </li>
-            <li class="fragment fade-in-then-semi-out">
-              Define the primary code to be run conditionally in the <code>Ok</code> arm.
-            </li>
-            <ul>
-              <li class="fragment fade-in-then-semi-out">
-                This can all be done with a <code>?</code> after the function invocation
-              </li>
-              <ul>
-                <li class="fragment fade-in-then-semi-out">
-                  Injects the error matching and passalong code
-                </li>
-              </ul>
-            </ul>
-          </ul>
-        </ul>
-        <li class="fragment fade-in-then-semi-out">
-          <code>unwrap</code>
-        </li>
-        <ul>
-          <li class="fragment fade-in-then-semi-out">
-            Used on a <code>Result</code> or <code>Option</code>
-          </li>
-          <li class="fragment fade-in-then-semi-out">
-            Panics on <code>Err</code> or <code>None</code>
-          </li>
-          <li class="fragment fade-in-then-semi-out">
-            Very bad practice
-          </li>
-        </ul>
+
+        <pre><code class="rust" data-noescape>
+enum Result&lt;T, E&gt; {
+  Ok(T), // Operation succeeded
+  Err(E) // Operation failed
+}
+        </code></pre>
+
       </section>
+
+      <section>
+        <h3>Error Handling</h3>
+
+        <pre><code class="rust" data-noescape>
+fn simple_computation() -> Result&lt;u32, String&gt; {
+  // ...
+}
+
+fn complex_computation() -> Result&lt;u32, String&gt; {
+  let result = simple_computation();
+
+  match result {
+    Ok(number) => {
+      // Other computations...
+
+      Ok(number)
+    },
+    Err(err) => Err(err)
+  }
+}
+
+fn complex_computation() -> Result&lt;u32, String&gt; {
+  let result = simple_computation()?; // If result is Err, return that to the caller function and stop function execution
+
+  let result = simple_computation().unwrap(); // If result is Err, panic: very bad practice
+  let result = Option::Some(4).unwrap(); // If result is None, panic
+}
+</code></pre>          
+
+      </section>
+
       <!-- potential error handling example -->
       <!-- <section>
         <pre><code class="rust" data-noescape>
