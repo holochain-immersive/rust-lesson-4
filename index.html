@@ -117,7 +117,7 @@
 <fragment animate="by-line separate-comments balanced">
 // Option is an Enum with two variants, None and Some&lt;T&gt;
 // If we were implementing the Option enum from scratch, it might look like:
-Option&lt;T&gt; {
+enum Option&lt;T&gt; {
   // An instance of the Option enum can take one of two variants
   Some(T), // one containing a payload of your specified type
   None // one flagging the absence of a payload
