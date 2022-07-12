@@ -57,10 +57,12 @@ fn main() {
 use std::collections::Hashmap;
 &nbsp;
 fn main() {
-  let mut ages: HashMap&lt;str, u32&gt; = HashMap::new();
+  let mut ages: HashMap&lt;&amp;str, u32&gt; = HashMap::new();
+  &nbsp;
+  let alice_name = "Alice";
   &nbsp;
   // Inserting
-  ages.insert("Alice", 53); // Requires mutability
+  ages.insert(alice_name, 53); // Requires mutability
   &nbsp;
   // Getting an option by key
   let alice_age: Option&lt;u32&gt; = ages.get(alice_name);
