@@ -118,10 +118,21 @@
         </li>
 
         <pre><code class="rust" data-noescape>
-enum Option&lt;T&gt; {
-  Some(T),
-  None // Serves the same purpose as <code>null</code> from most other languages
+<span class="fragment">
+// If we were implementing the Option enum from scratch, ourselves:
+</span>
+<span class="fragment">
+Option&lt;T&gt; {
+  <span class="fragment">
+  // An instance of the Option enum can take one of two forms
+  </span>
+  <span class="fragment">
+  Some(T),<span class="fragment"> // one containing a payload of your specified type</span>
+  None<span class="fragment"> // one flagging the absence of a payload</span>
+      <span class="fragment"> // Serves the same purpose as null from most other languages</span>
+  </span>
 }
+</span>
 
 fn main() {
   fn plus_one(x: Option&lt;i32&gt;) -> Option&lt;i32&gt; {
