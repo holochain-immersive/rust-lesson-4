@@ -113,57 +113,56 @@
         <section>
           <h3>Option</h3>
 
-          <li class="fragment fade-in-then-semi-out">
-            Serves the same purpose as <code>null</code> from most other languages
-          </li>
-  
           <pre><code class="rust" data-noescape>
+<span class="fragment">
+// Option is an Enum with two variants, None and Some&lt;T&gt;
+</span>
+<span class="fragment">
+// If we were implementing the Option enum from scratch, it might look like:
+</span>
+<span class="fragment">
+Option&lt;T&gt; {
   <span class="fragment">
-  // Option is an Enum with two variants, None and Some&lt;T&gt;
+  // An instance of the Option enum can take one of two forms
   </span>
   <span class="fragment">
-  // If we were implementing the Option enum from scratch, it might look like:
-  </span>
+  Some(T),<span class="fragment"> // one containing a payload of your specified type</span>
+  None<span class="fragment"> // one flagging the absence of a payload</span>
   <span class="fragment">
-  Option&lt;T&gt; {
-    <span class="fragment">
-    // An instance of the Option enum can take one of two forms
-    </span>
-    <span class="fragment">
-    Some(T),<span class="fragment"> // one containing a payload of your specified type</span>
-    None<span class="fragment"> // one flagging the absence of a payload</span>
-        <span class="fragment"> // Serves the same purpose as null from most other languages</span>
-    </span>
-  }
+  // None serves a similar purpose to null from other languages
   </span>
-  
-  fn main() {
-    fn plus_one(x: Option&lt;i32&gt;) -> Option&lt;i32&gt; {
-        match x {
-            None => None, // You can leave off "Option::", it's built into the language
-            Some(i) => Some(i + 1),
-        }
+}
+</span>
+
+<span class="fragment">
+fn main() {
+  fn plus_one(x: Option&lt;i32&gt;) -> Option&lt;i32&gt; {
+    match x {
+      None => None,<span class="fragment"> // You can leave off "Option::", it's built into the language</span>
+      Some(i) => Some(i + 1),
     }
-  
-    let five = Some(5);
-    let six = plus_one(five);
-    let none = plus_one(None);
   }
-          </code></pre>
-          </section>
 
-        <section>
-          <h3>Generic functions</h3>
+  let five = Some(5);
+  let six = plus_one(five);
+  let none = plus_one(None);
+}
+</span>
+        </code></pre>
+        </section>
 
-          <pre><code class="rust" data-noescape>
-fn wrap_into_option&lt;T&gt;(value: T) -> Option&lt;T&gt; { //  With <code>Some&ltT></code> after the function name in the definition
+      <section>
+        <h3>Generic functions</h3>
+
+        <pre><code class="rust" data-noescape>
+fn wrap_into_option&lt;T&gt;(value: T) -> Option&lt;T&gt; { //  With Some&lt;T&gt; after the function name in the definition
   Option(value)
 }
 
 fn main() {
   // When calling the function, you can specify the return value type either:
   let maybe_number: Option&lt;u32&gt; = wrap_into_option(4); // After the variable name to which the function's return value is assigned
-  let maybe_number = wrap_into_option::&lt;u32&gt;(4); // Between the function name and the parameter list with <code>::&ltT></code>
+  let maybe_number = wrap_into_option::&lt;u32&gt;(4); // Between the function name and the parameter list with ::&lt;T&gt;
         </code></pre>
         </section>
 
@@ -233,8 +232,8 @@ fn main() {
 
           <pre><code class="rust" data-noescape>
 enum Result&lt;T, E&gt; { // Generic result over two types
-  Ok(T), // The <code>Ok</code> type for when all goes right
-  Err(E) // The <code>Err</code> type for when there is an error
+  Ok(T), // The `Ok` type for when all goes right
+  Err(E) // The `Err` type for when there is an error
 }
         </code></pre>
         </section>
