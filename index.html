@@ -93,7 +93,7 @@
             or more other types
           </li>
           <li class="fragment fade-in-then-semi-out">
-            I pattern of code reuse, like functions or classes, but at a higher
+            A pattern of code reuse, like functions or classes, but at a higher
             level of abstraction
           </li>
           <li class="fragment fade-in-then-semi-out">
@@ -117,7 +117,7 @@
 <fragment animate="by-line separate-comments balanced">
 // Option is an Enum with two variants, None and Some&lt;T&gt;
 // If we were implementing the Option enum from scratch, it might look like:
-Option&lt;T&gt; {
+enum Option&lt;T&gt; {
   // An instance of the Option enum can take one of two variants
   Some(T), // one containing a payload of your specified type
   None // one flagging the absence of a payload
@@ -147,11 +147,11 @@ fn main() {
           <fragment animate="balanced by-line separate-comments">
 // To define a function accepting a generic type, include &lt;T&gt; after the function name
 fn wrap_into_option&lt;T&gt;(value: T) -> Option&lt;T&gt; {
-  Option(value)
+  Some(value)
 }
 
 fn main() {
-  // When calling the function that operates on a generic type, you can specify the return value type either:
+  // When calling the function that operates on a generic type, you can specify the return value type either:<!-- TODO: Too long -->
 
   // 1) After the variable name to which the function's return value is assigned
   let maybe_number: Option&lt;u32&gt; = wrap_into_option(4);
@@ -172,7 +172,7 @@ fn main() {
 fn main() {
   // Like arrays, vectors hold lists of things
   let empty: Vec&lt;u32&gt; = Vec::new();
-  let mut numbers: Vec&lt;u32&gt; = vec![1, 2, 3];
+  let mut numbers: Vec&lt;u32&gt; = vec![1, 2, 3]; // vec![] macro, can receive multiple values 
 
   numbers.push(5); // Vectors can be grown (dynamic memory allocation)
                    // This means they are less efficient than arrays
@@ -181,7 +181,8 @@ fn main() {
   // .get()
   let maybe_sixth: Option&lt;u32&gt; = numbers.get(5); // Safer; Returns an option
 
-  let summed_numbers: Vec&lt;u32&gt; = numbers.into_iter().map(|x| x + 1).collect(); // Can be converted into iterators
+  // Can be converted into iterators
+  let summed_numbers: Vec&lt;u32&gt; = numbers.into_iter().map(|x| x + 1).collect(); 
 }
 </code></pre>
 </fragment>
@@ -298,7 +299,7 @@ fn main() {
           <pre><code class="rust" data-noescape>
 enum Result&lt;T, E&gt; { // Generic result over two types
   Ok(T), // The `Ok` type for when all goes right
-  Err(E) // The `Err` type for when there is an error
+  Err(E) // The `Err` type for when there is an error<!-- We don't need to specify the Result:: either (same as Option)-->
 }
         </code></pre>
           </fragment>
@@ -327,8 +328,8 @@ fn complex_computation() -> Result&lt;u32, String&gt; {
 }
 
 fn complex_computation() -> Result&lt;u32, String&gt; {
-  let result = simple_computation()?; // If result is Err, return that to the caller function and stop function execution
-
+  let result = simple_computation()?; // If result is Err, return that to the caller function and stop function execution <!--TODO: too long-->
+<!-- TODO: use result to show the happy path-->
   let result = simple_computation().unwrap(); // If result is Err, panic: very bad practice
   let result = Option::Some(4).unwrap(); // If result is None, panic
 }
