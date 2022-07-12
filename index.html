@@ -175,17 +175,20 @@
               Between the function name and the parameter list with <code>::&ltT></code>
             </li>
           </ul>
+          <fragment animate="balanced by-line separate-comments">
   
           <pre><code class="rust" data-noescape>
-fn wrap_into_option&lt;T&gt;(value: T) -> Option&lt;T&gt; { //  With <code>Some&ltT></code> after the function name in the definition
+fn wrap_into_option&lt;T&gt;(value: T) -> Option&lt;T&gt; { //  With Some&ltT> after the function name in the definition
   Option(value)
 }
 
 fn main() {
   // When calling the function, you can specify the return value type either:
   let maybe_number: Option&lt;u32&gt; = wrap_into_option(4); // After the variable name to which the function's return value is assigned
-  let maybe_number = wrap_into_option::&lt;u32&gt;(4); // Between the function name and the parameter list with <code>::&ltT></code>
+  let maybe_number = wrap_into_option::&lt;u32&gt;(4); // Between the function name and the parameter list with ::&ltT>
+}
         </code></pre>
+          </fragment>
         </section>
 
         <section>
@@ -223,6 +226,7 @@ fn main() {
             </li>
           </ul>
           
+          <fragment animate="balanced by-line separate-comments">
           <pre><code class="rust">
 fn main() {
   let empty: Vec&lt;u32&gt; = Vec::new(); // New empty vector
@@ -236,7 +240,8 @@ fn main() {
 
   let summed_numbers: Vec&lt;u32&gt; = numbers.into_iter().map(|x| x + 1).collect(); // Can be converted into iterators
 }
-        </code></pre>
+</code></pre>
+</fragment>
         </section>
 
         <section>
@@ -257,6 +262,7 @@ fn main() {
               in addition to <code>iter()</code>, there are <code>.keys()</code> and <code>.values()</code>
             </li>
           </ul>
+          <fragment animate="balanced by-line separate-comments">
           <pre><code class="rust">
 use std::collections::Hashmap;
 
@@ -277,6 +283,7 @@ fn main() {
   for age in ages.values() { /* Iterate over values */ }
 }
 </code></pre>
+          </fragment>
         </section>
         <section>
           <h3>Error Handling</h3>
@@ -346,16 +353,20 @@ fn main() {
               Very bad practice
             </li>
           </ul>
+          <fragment animate="balanced by-line separate-comments">
+
           <pre><code class="rust" data-noescape>
 enum Result&lt;T, E&gt; { // Generic result over two types
-  Ok(T), // The <code>Ok</code> type for when all goes right
-  Err(E) // The <code>Err</code> type for when there is an error
+  Ok(T), // The Ok type for when all goes right
+  Err(E) // The Err type for when there is an error
 }
         </code></pre>
+          </fragment>
         </section>
 
         <section>
           <h3>Error Handling</h3>
+          <fragment animate="balanced by-line separate-comments">
 
           <pre><code class="rust" data-noescape>
 fn simple_computation() -> Result&lt;u32, String&gt; {
@@ -382,6 +393,7 @@ fn complex_computation() -> Result&lt;u32, String&gt; {
   let result = Option::Some(4).unwrap(); // If result is None, panic
 }
 </code></pre>
+          </fragment>
         </section>
 
         <!-- potential error handling example -->
