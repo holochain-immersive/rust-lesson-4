@@ -1,4 +1,108 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="Description" content="Put your description here."><base href="/"><style>body,html{margin:0;padding:0;font-family:sans-serif;background-color:#ededed;--r-main-font-size:24px;--r-heading-margin:20px 0 12px 0}.hljs-keyword{color:#817eed!important}.hljs-literal{color:#ff90b8!important}.slides{width:75%!important}.container{top:0!important;display:flex!important;flex-direction:row!important}.column{flex:1}section{text-align:left}.popover{position:absolute;background-color:#4d4d4d;padding:1rem 2rem;box-shadow:0 2px 5px 0 rgba(0,0,0,.26);border-radius:10px;width:auto;transform:translate(35px,-15px)}.popover:after{content:"";position:absolute;top:6px;left:-10px;border-style:solid;border-width:25px 25px 0;border-color:#4d4d4d transparent;display:block;width:0;z-index:1;transform:translate(-50%,50%) rotate(90deg)}.reveal pre code{max-height:800px!important}</style><link rel="stylesheet" href="rust-lesson-4/bce6cb85.css"><link rel="stylesheet" href="rust-lesson-4/5265d60d.css"><link rel="stylesheet" href="rust-lesson-4/86125abe.css"><title>Lesson 4</title></head><body><div class="reveal"><div class="slides"><section><h1>Generic Types</h1></section><section><h3>Generic Types</h3><li class="fragment fade-in-then-semi-out"><em>Definition</em>: A generic is a type defined in relation to one or more other types</li><li class="fragment fade-in-then-semi-out">I pattern of code reuse, like functions or classes, but at a higher level of abstraction</li><li class="fragment fade-in-then-semi-out">Use <code>&lt;&gt;</code> syntax at instantiation type for specifying the related types</li><li class="fragment fade-in-then-semi-out">Used in:</li><ul><li class="fragment fade-in-then-semi-out">Stucts and enums</li><li class="fragment fade-in-then-semi-out">Options</li><li class="fragment fade-in-then-semi-out">Generic functions</li><li class="fragment fade-in-then-semi-out">Collections</li><li class="fragment fade-in-then-semi-out">Error handling</li><span class="fragment"></span></ul></section><section><h3>Option</h3><pre><code class="rust" data-noescape="">
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="Description" content="Put your description here.">
+    <base href="/">
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background-color: #ededed;
+        --r-main-font-size: 24px;
+        --r-heading-margin: 20px 0 12px 0;
+      }
+
+      .slides {
+        width: 75% !important;
+      }
+
+      .container {
+        top: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      section {
+        text-align: left;
+      }
+
+      .popover {
+        position: absolute;
+        background-color: #4d4d4d;
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        border-radius: 10px;
+        width: auto;
+        transform: translate(35px, -15px);
+      }
+
+      .popover:after {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: -10px;
+        border-style: solid;
+        border-width: 25px 25px 0;
+        border-color: #4d4d4d transparent;
+        display: block;
+        width: 0;
+        z-index: 1;
+        transform: translate(-50%, 50%) rotate(90deg);
+      }
+
+      .reveal pre code {
+        max-height: 800px !important;
+      }
+    </style>
+    <link rel="stylesheet" href="rust-lesson-4/bce6cb85.css">
+    <link rel="stylesheet" href="rust-lesson-4/5265d60d.css">
+    <link rel="stylesheet" href="rust-lesson-4/86125abe.css">
+    <title>Lesson 4</title>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>Generic Types</h1>
+        </section>
+
+        <section>
+          <h3>Generic Types</h3>
+
+          <li class="fragment fade-in-then-semi-out">
+            <em>Definition</em>: A generic is a type defined in relation to one
+            or more other types
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            A pattern of code reuse, like functions or classes, but at a higher
+            level of abstraction
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            Use <code>&lt;&gt;</code> syntax at instantiation type for specifying
+            the related types
+          </li>
+          <li class="fragment fade-in-then-semi-out">Used in:</li>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">Stucts and enums</li>
+            <li class="fragment fade-in-then-semi-out">Options</li>
+            <li class="fragment fade-in-then-semi-out">Generic functions</li>
+            <li class="fragment fade-in-then-semi-out">Collections</li>
+            <li class="fragment fade-in-then-semi-out">Error handling</li>
+            <span class="fragment"></span>
+          </ul>
+        </section>
+        <section>
+          <h3>Option</h3>
+
+          <pre><code class="rust" data-noescape="">
 <fragment animate="by-line separate-comments balanced">
 // Option is an Enum with two variants, None and Some&lt;T&gt;
 // If we were implementing the Option enum from scratch, it might look like:
@@ -22,15 +126,21 @@ fn main() {
   let none = plus_one(None);
 }
 </fragment>
-        </code></pre></section><section><h3>Generic functions</h3><pre><code class="rust" data-noescape="">
+        </code></pre>
+        </section>
+
+      <section>
+        <h3>Generic functions</h3>
+
+        <pre><code class="rust" data-noescape="">
           <fragment animate="balanced by-line separate-comments">
 // To define a function accepting a generic type, include &lt;T&gt; after the function name
 fn wrap_into_option&lt;T&gt;(value: T) -&gt; Option&lt;T&gt; {
-  Option(value)
+  Some(value)
 }
 
 fn main() {
-  // When calling the function that operates on a generic type, you can specify the return value type either:
+  // When calling the function that operates on a generic type, you can specify the return value type either:<!-- TODO: Too long -->
 
   // 1) After the variable name to which the function's return value is assigned
   let maybe_number: Option&lt;u32&gt; = wrap_into_option(4);
@@ -38,11 +148,20 @@ fn main() {
   let maybe_number = wrap_into_option::&lt;u32&gt;(4);
 }
           </fragment>
-        </code></pre></section><section><h3>Collections</h3><h4>Vectors</h4><fragment animate="balanced by-line separate-comments"><pre><code class="rust">
+        </code></pre>
+        </section>
+
+        <section>
+          <h3>Collections</h3>
+
+          <h4>Vectors</h4>
+          
+          <fragment animate="balanced by-line separate-comments">
+          <pre><code class="rust">
 fn main() {
   // Like arrays, vectors hold lists of things
   let empty: Vec&lt;u32&gt; = Vec::new();
-  let mut numbers: Vec&lt;u32&gt; = vec![1, 2, 3];
+  let mut numbers: Vec&lt;u32&gt; = vec![1, 2, 3]; // vec![] macro, can receive multiple values 
 
   numbers.push(5); // Vectors can be grown (dynamic memory allocation)
                    // This means they are less efficient than arrays
@@ -51,18 +170,26 @@ fn main() {
   // .get()
   let maybe_sixth: Option&lt;u32&gt; = numbers.get(5); // Safer; Returns an option
 
-  let summed_numbers: Vec&lt;u32&gt; = numbers.into_iter().map(|x| x + 1).collect(); // Can be converted into iterators
+  // Can be converted into iterators
+  let summed_numbers: Vec&lt;u32&gt; = numbers.into_iter().map(|x| x + 1).collect(); 
 }
-</code></pre></fragment></section><section><h3>Collections</h3><h4>Hashmaps</h4><fragment animate="balanced by-line separate-comments"><pre><code class="rust">
+</code></pre>
+</fragment>
+        </section>
+
+        <section>
+          <h3>Collections</h3>
+
+          <h4>Hashmaps</h4>
+          <fragment animate="balanced by-line separate-comments">
+          <pre><code class="rust">
 use std::collections::Hashmap;
 &nbsp;
 fn main() {
-  let mut ages: HashMap&lt;&amp;str, u32&gt; = HashMap::new();
-  &nbsp;
-  let alice_name = "Alice";
+  let mut ages: HashMap&lt;str, u32&gt; = HashMap::new();
   &nbsp;
   // Inserting
-  ages.insert(alice_name, 53); // Requires mutability
+  ages.insert("Alice", 53); // Requires mutability
   &nbsp;
   // Getting an option by key
   let alice_age: Option&lt;u32&gt; = ages.get(alice_name);
@@ -85,12 +212,93 @@ fn main() {
     println!("{} is an age in the hashmap", age);
   }
 }
-</code></pre></fragment></section><section><h3>Error Handling</h3><li class="fragment fade-in-then-semi-out">Panic</li><ul><li class="fragment fade-in-then-semi-out">Crashes the application immediately</li><li class="fragment fade-in-then-semi-out">Out-of-bounds error is one thing that leads to this</li></ul><li class="fragment fade-in-then-semi-out">The <code>Result</code> enum</li><ul><li class="fragment fade-in-then-semi-out">A generic result over two types</li><ul><li class="fragment fade-in-then-semi-out">The <code>Ok</code> type for when all goes right</li><li class="fragment fade-in-then-semi-out">The the <code>Err</code> type for when there is an error</li></ul><li class="fragment fade-in-then-semi-out">It's common when writing error handling for an outer function to:</li><ul><li class="fragment fade-in-then-semi-out"><code>match</code> against the variant of the <code>Result</code> instance (<code>Error</code> or <code>Ok</code>)</li><li class="fragment fade-in-then-semi-out">Pass along any errors as its return value if the subroutine failed</li><li class="fragment fade-in-then-semi-out">Define the primary code to be run conditionally in the <code>Ok</code> arm.</li><ul><li class="fragment fade-in-then-semi-out">This can all be done with a <code>?</code> after the function invocation</li><ul><li class="fragment fade-in-then-semi-out">Injects the error matching and passalong code</li></ul></ul></ul></ul><li class="fragment fade-in-then-semi-out"><code>unwrap</code></li><ul><li class="fragment fade-in-then-semi-out">Used on a <code>Result</code> or <code>Option</code></li><li class="fragment fade-in-then-semi-out">Panics on <code>Err</code> or <code>None</code></li><li class="fragment fade-in-then-semi-out">Very bad practice</li></ul><fragment animate="balanced by-line separate-comments"><pre><code class="rust" data-noescape="">
+</code></pre>
+          </fragment>
+        </section>
+        <section>
+          <h3>Error Handling</h3>
+
+          <li class="fragment fade-in-then-semi-out">Panic</li>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              Crashes the application immediately
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              Out-of-bounds error is one thing that leads to this
+            </li>
+          </ul>
+
+          <li class="fragment fade-in-then-semi-out">
+            The <code>Result</code> enum
+          </li>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              A generic result over two types
+            </li>
+            <ul>
+              <li class="fragment fade-in-then-semi-out">
+                The <code>Ok</code> type for when all goes right
+              </li>
+              <li class="fragment fade-in-then-semi-out">
+                The the <code>Err</code> type for when there is an error
+              </li>
+            </ul>
+            <li class="fragment fade-in-then-semi-out">
+              It's common when writing error handling for an outer function to:
+            </li>
+            <ul>
+              <li class="fragment fade-in-then-semi-out">
+                <code>match</code> against the variant of the <code>Result</code> instance (<code>Error</code> or
+                <code>Ok</code>)
+              </li>
+              <li class="fragment fade-in-then-semi-out">
+                Pass along any errors as its return value if the subroutine failed
+              </li>
+              <li class="fragment fade-in-then-semi-out">
+                Define the primary code to be run conditionally in the <code>Ok</code> arm.
+              </li>
+              <ul>
+                <li class="fragment fade-in-then-semi-out">
+                  This can all be done with a <code>?</code> after the function invocation
+                </li>
+                <ul>
+                  <li class="fragment fade-in-then-semi-out">
+                    Injects the error matching and passalong code
+                  </li>
+                </ul>
+              </ul>
+            </ul>
+          </ul>
+          <li class="fragment fade-in-then-semi-out">
+            <code>unwrap</code>
+          </li>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              Used on a <code>Result</code> or <code>Option</code>
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              Panics on <code>Err</code> or <code>None</code>
+            </li>
+            <li class="fragment fade-in-then-semi-out">
+              Very bad practice
+            </li>
+          </ul>
+          <fragment animate="balanced by-line separate-comments">
+
+          <pre><code class="rust" data-noescape="">
 enum Result&lt;T, E&gt; { // Generic result over two types
   Ok(T), // The `Ok` type for when all goes right
-  Err(E) // The `Err` type for when there is an error
+  Err(E) // The `Err` type for when there is an error<!-- We don't need to specify the Result:: either (same as Option)-->
 }
-        </code></pre></fragment></section><section><h3>Error Handling</h3><fragment animate="balanced by-line separate-comments"><pre><code class="rust" data-noescape="">
+        </code></pre>
+          </fragment>
+        </section>
+
+        <section>
+          <h3>Error Handling</h3>
+          <fragment animate="balanced by-line separate-comments">
+
+          <pre><code class="rust" data-noescape="">
 fn simple_computation() -&gt; Result&lt;u32, String&gt; {
   // ...
 }
@@ -109,9 +317,59 @@ fn complex_computation() -&gt; Result&lt;u32, String&gt; {
 }
 
 fn complex_computation() -&gt; Result&lt;u32, String&gt; {
-  let result = simple_computation()?; // If result is Err, return that to the caller function and stop function execution
-
+  let result = simple_computation()?; // If result is Err, return that to the caller function and stop function execution <!--TODO: too long-->
+<!-- TODO: use result to show the happy path-->
   let result = simple_computation().unwrap(); // If result is Err, panic: very bad practice
   let result = Option::Some(4).unwrap(); // If result is None, panic
 }
-</code></pre></fragment></section><section><h1>That's it!</h1></section></div></div><script type="module" src="./rust-lesson-4/b999515c.js"></script></body></html>
+</code></pre>
+          </fragment>
+        </section>
+
+        <!-- potential error handling example -->
+        <!-- <section>
+        <pre><code class="rust" data-noescape>
+          fn main() {
+              panic!("crash and burn");
+          }
+        </code></pre>
+        <pre><code class="rust" data-noescape>
+          enum Result&ltT, E> {
+              Ok(T),
+              Err(E),
+          }
+        </code></pre>
+        <pre><code class="rust" data-noescape>
+          fn main() {
+              let f = File::open("hello.txt");
+
+              let f = match f {
+                  Ok(file) => file,
+                  Err(error) => panic!("Problem opening the file: {:?}", error),
+              };
+          }
+        </code></pre>
+        <pre><code class="rust" data-noescape>
+          fn read_username_from_file() -> Result<String, io::Error> {
+              let mut f = File::open("hello.txt")?;
+              let mut s = String::new();
+              f.read_to_string(&mut s)?;
+              Ok(s)
+          }
+        </code></pre>
+        <pre><code class="rust" data-noescape>
+          fn main() {
+              let f = File::open("hello.txt").unwrap();
+          }
+        </code></pre>
+      </section> -->
+        <section>
+          <h1>That's it!</h1>
+        </section>
+      </div>
+    </div>
+
+    
+  
+
+<script type="module" src="./rust-lesson-4/b999515c.js"></script></body></html>
